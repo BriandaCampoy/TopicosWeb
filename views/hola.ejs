@@ -4,9 +4,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <title>Saludos</title>
 </head>
 <body>
+    <%
+        var fecha = new Date();
+    %>
     <h1>Bienvenido a mi app con vistas EJS</h1>
+    <h2>La fecha es <%=fecha %></h2>
+    <h3><%=listaEstudiantes[0]%></h3>
+
+    <table border="1">
+        <thead>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Aprobado</th>
+            <th>Operaciones</th>
+        </thead>
+        <tbody>
+            <%
+                for(var i=0;i<listaEstudiantes.length;i++){ 
+                %>
+            
+            <tr>
+                <td><%=listaEstudiantes[i].id %></td>
+                <td><%=listaEstudiantes[i].nombre %></td>
+                <td><%=listaEstudiantes[i].aprobado %></td>
+                <td> - </td>
+            </tr>
+
+            <% } %>
+        </tbody>
+    </table>
+
 </body>
 </html>
