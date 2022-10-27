@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express()
+app.use(express.urlencoded({extended:true}))
 //conexion base de datos
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://RakkaAdmin:123abc@cluster0.aoana7i.mongodb.net/crud-proyecto').

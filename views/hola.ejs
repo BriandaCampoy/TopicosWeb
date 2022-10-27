@@ -13,9 +13,21 @@
     %>
     <h1>Bienvenido a mi app con vistas EJS</h1>
     <h2>La fecha es <%=fecha %></h2>
-    <h3><%=listaEstudiantes[0]%></h3>
 
-    <table border="1">
+    <form action="/estudiantes" method="POST">
+        <input type="text" name="id" placeholder="Ingresa el ID" required><br>
+        <input type="text" name="nombre" placeholder="Ingresa el nombre" required><br>
+        <input type="submit">
+    </form>
+
+    <form action="/estudiantes" method="GET">
+        <input type="text" name="id" placeholder="Ingresa el ID a buscar"><br>
+        <input type="submit" value="Buscar">
+    </form>
+
+    <!-- <h3><%=listaEstudiantes[0]%></h3> -->
+
+    <table border="1" class="table">
         <thead>
             <th>ID</th>
             <th>Nombre</th>
@@ -31,7 +43,14 @@
                 <td><%=listaEstudiantes[i].id %></td>
                 <td><%=listaEstudiantes[i].nombre %></td>
                 <td><%=listaEstudiantes[i].aprobado %></td>
-                <td> - </td>
+                <td>
+                    <%
+                    const estado = listaEstudiantes[i].aprobado?"Reprobar":"Aprobar"
+                    const color = listaEstudiantes[i].aprobado?"danger":"success"
+                    %>
+                    <a href="/estudiantes/<%=listaEstudiantes[i].id%>?_method=PUT" class="btn btn-<%=color%>"><%=estado%></a>
+                    <a href="/estudiantes/<%=listaEstudiantes[i].id%>?_method=DELETE" class="btn btn-danger">Eliminar</a> 
+                </td>
             </tr>
 
             <% } %>
