@@ -16,6 +16,10 @@ rutas.use((req,res,next)=>{
         req.method='DELETE';
         req.url = req.path;
     }
+    if(req.query._method=='GET'){
+        req.method='GET';
+        req.url = req.path;
+    }
     next();
 })
 
@@ -49,16 +53,10 @@ rutas.post('/estudiantes',  async (req,res)=>{
 
 
 //Obtener por id
-rutas.get('/estudiantes', async (req,res,next)=>{
-    const e = new Estud(req.query);
-    const id = e.id;
-    if(id!=''){
-        const listaEstudiantes = await Estud.find({id:id});
-        res.render("hola",{listaEstudiantes})
-    }else{
-        res.redirect('/')
-    }
-
+rutas.get('/estudiantes/:id', async (req,res,next)=>{
+    const id = req.params.id;
+    const listaEstudiantes = await Estud.find({id:id});
+    res.render("hola",{listaEstudiantes});
 })
 
 

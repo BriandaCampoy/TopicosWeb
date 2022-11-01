@@ -5,29 +5,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <title>Saludos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Crud-Proyecto</title>
+    <style>
+        body{
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        form{
+            margin: 20px;
+        }
+    </style>
 </head>
 <body>
     <%
         var fecha = new Date();
     %>
-    <h1>Bienvenido a mi app con vistas EJS</h1>
+    <h1>Bienvenido al registro de alumnos</h1>
     <h2>La fecha es <%=fecha %></h2>
 
-    <form action="/estudiantes" method="POST">
-        <input type="text" name="id" placeholder="Ingresa el ID" required><br>
-        <input type="text" name="nombre" placeholder="Ingresa el nombre" required><br>
-        <input type="submit">
+    <h2>Agregar nuevo alumno</h2>
+    <form class="form-inline" action="/estudiantes" method="POST">
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input class="form-control" type="text" name="id" id="id" placeholder="Ingresa el ID" required><br>
+        </div>
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingresa el nombre" required><br>
+        </div>
+        
+        <input class="btn btn-primary" type="submit">
     </form>
+    <h2>Buscar Alumno</h2>
+    <form class="form-inline" action="/estudiantes" method="GET">
+        <div class="form-group">
+            <label for="Findid">ID</label>
+            <input type="text" name="id" id="Findid" class="form-control" placeholder="Ingresa el ID a buscar"><br>
+        </div>
+            <a id="GetLink" href="">
+             <input type="button" class="btn btn-info" value="Buscar" onclick=buscar()>
+            </a>
 
-    <form action="/estudiantes" method="GET">
-        <input type="text" name="id" placeholder="Ingresa el ID a buscar"><br>
-        <input type="submit" value="Buscar">
     </form>
 
     <!-- <h3><%=listaEstudiantes[0]%></h3> -->
 
-    <table border="1" class="table">
+    <table border="1" class="table table-hover">
         <thead>
             <th>ID</th>
             <th>Nombre</th>
@@ -42,13 +67,17 @@
             <tr>
                 <td><%=listaEstudiantes[i].id %></td>
                 <td><%=listaEstudiantes[i].nombre %></td>
-                <td><%=listaEstudiantes[i].aprobado %></td>
+                <td><%=listaEstudiantes[i].aprobado?"Si":"No" %></td>
                 <td>
                     <%
-                    const estado = listaEstudiantes[i].aprobado?"Reprobar":"Aprobar"
+                    const estado = listaEstudiantes[i].aprobado?"down":"up"
                     const color = listaEstudiantes[i].aprobado?"danger":"success"
                     %>
-                    <a href="/estudiantes/<%=listaEstudiantes[i].id%>?_method=PUT" class="btn btn-<%=color%>"><%=estado%></a>
+                    <a href="/estudiantes/<%=listaEstudiantes[i].id%>?_method=PUT">
+                        <button class="btn btn-<%=color%>">
+                            <i class="bi bi-hand-thumbs-<%=estado%>-fill"></i>
+                            <!-- <%=estado%> -->
+                        </button></a>
                     <a href="/estudiantes/<%=listaEstudiantes[i].id%>?_method=DELETE" class="btn btn-danger">Eliminar</a> 
                 </td>
             </tr>
@@ -56,6 +85,16 @@
             <% } %>
         </tbody>
     </table>
-
+<script>
+    function buscar(){
+        let id = document.getElementById("Findid").value;
+        let link = document.getElementById("GetLink");
+        if(id!=''){
+            link.href = `/estudiantes/${id}?_method=GET`
+        }else{
+            link.href = `/`
+        }
+    }
+</script>
 </body>
 </html>
